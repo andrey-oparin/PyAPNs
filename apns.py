@@ -27,6 +27,7 @@ from binascii import a2b_hex, b2a_hex
 from datetime import datetime
 from socket import socket, AF_INET, SOCK_STREAM
 from struct import pack, unpack
+import six
 
 try:
     from ssl import wrap_socket
@@ -284,7 +285,7 @@ class GatewayConnection(APNsConnection):
         payload_json = payload.json()
         payload_length_bin = APNs.packed_ushort_big_endian(len(payload_json))
 
-        notification = ('\0' + token_length_bin + token_bin
+        notification = (six.b('\0') + token_length_bin + token_bin
             + payload_length_bin + payload_json)
 
         return notification
